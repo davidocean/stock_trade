@@ -5,6 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from orm_table import *
 import time
+from CONSTANT_KEY import *
 
 
 def main():
@@ -36,7 +37,7 @@ def list_instance(df):
 
 # 连接数据库  mysql
 def db_connect():
-    engine = create_engine('mysql+pymysql://root:admin123@dai.davidocean.cc:3306/stock_info')
+    engine = create_engine('mysql+pymysql://{dbuser}:{dbpassword}@{mysqladdr}:3306/stock_info'.format(dbuser=DBUSER,dbpassword=DBPASSWORD,mysqladdr=MYSQL_ADDR))
     DBSession = sessionmaker(bind=engine)
     session = DBSession()
     return session

@@ -7,25 +7,24 @@ from email.mime.image import MIMEImage
 # 负责将多个对象集合起来
 from email.mime.multipart import MIMEMultipart
 from email.header import Header
+from CONSTANT_KEY import *
 
 
 def sendEmail(input_dict):
     # SMTP服务器,这里使用163邮箱
-    mail_host = "smtp.davidocean.cc"
     # 发件人邮箱
-    mail_sender = "david_ocean@163.com"
+    mail_sender = MAIL_SENDER
     # 邮箱授权码,注意这里不是邮箱密码,如何获取邮箱授权码,请看本文最后教程
-    mail_license = "PZHZJAEGEKSQATWT"
+    mail_license = MAIL_LICENSE
     # 收件人邮箱，可以为多个收件人
-    mail_receivers = ["2735403137@qq.com", "season1016@gmail.com"]
+    mail_receivers = [MAIL_REVEIVER_01, MAIL_REVEIVER_02]
     mm = MIMEMultipart('related')
     # 邮件主题
     subject_content = "简报：知乎股票{}".format(input_dict["时间"])
     # 设置发送者,注意严格遵守格式,里面邮箱为发件人邮箱
-    mm["From"] = "notice<david_ocean@163.com>"
+    mm["From"] = "notice<{}>".format(MAIL_SENDER)
     # 设置接受者,注意严格遵守格式,里面邮箱为接受者邮箱
-    mm["To"] = "zhen<season1016@gmail.com>,dai<2735403137@qq.com>"
-    # mm["To"] = "dai<2735403137@qq.com>"
+    mm["To"] = "reveiver1<{reveiver1}>,reveiver2<{reveiver2}>".format(reveiver1=MAIL_REVEIVER_01,reveiver2=MAIL_REVEIVER_02)
     # 设置邮件主题
     mm["Subject"] = Header(subject_content, 'utf-8')
 
@@ -40,7 +39,6 @@ def sendEmail(input_dict):
     mm.attach(message_text)
 
     # 创建SMTP对象
-    # smtpObj = smtplib.SMTP("smtp.davidocean.cc", 465)
     smtpObj = smtplib.SMTP("smtp.163.com", 25)
     smtpObj.ehlo()
     smtpObj.starttls()
